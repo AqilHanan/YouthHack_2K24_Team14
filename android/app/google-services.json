@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1040093037174",
+    "project_id": "youthxhack-2k24-team14",
+    "storage_bucket": "youthxhack-2k24-team14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040093037174:android:8cbf0e4cebe16b428d5557",
+        "android_client_info": {
+          "package_name": "com.example.youth_hack_2k24_group14"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8Seuvdn16WRrTjJxPf6VEjkTR71ejqLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
