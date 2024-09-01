@@ -39,7 +39,7 @@ class _TakerPageState extends State<TakerPage> {
                                 builder: (context) => CollectionPage()));
                       },
                       child: Text(
-                        "Delivery",
+                        "Profile",
                         style: TextStyle(fontSize: 24),
                       )),
                 ),
@@ -51,13 +51,10 @@ class _TakerPageState extends State<TakerPage> {
                   width: 200,
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CollectionPage()));
+                        Navigator.pop(context);
                       },
                       child: Text(
-                        "Delivery",
+                        "Exit",
                         style: TextStyle(fontSize: 24),
                       )),
                 ),

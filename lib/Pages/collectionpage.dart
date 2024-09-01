@@ -24,16 +24,6 @@ class _CollectionPageState extends State<CollectionPage> {
     false,
     false,
   ];
-  final List<String> _MealPref = [
-    'Breakfast',
-    'Lunch',
-    'Dinner',
-  ];
-  final List<bool> _selectedPref = [
-    false,
-    false,
-    false,
-  ];
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _familyMembersController =
@@ -45,7 +35,7 @@ class _CollectionPageState extends State<CollectionPage> {
   PlanType? _selectedPlan = PlanType.longTerm; // Default selected plan
 
   String _selectedFacilitiesString = '';
-  String _selectedPrefString = '';
+
   String _name = '';
   String _familyMembers = '';
   String _income = '';
@@ -192,30 +182,6 @@ class _CollectionPageState extends State<CollectionPage> {
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
-                  'Food Requirements',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _MealPref.length,
-                itemBuilder: (context, index) {
-                  return CheckboxListTile(
-                    title: Text(_MealPref[index]),
-                    value: _selectedPref[index],
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _selectedPref[index] = value ?? false;
-                        _updateSelectedPrefString();
-                      });
-                    },
-                  );
-                },
-              ),
-              const Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Text(
                   'Dietary Requirements',
                   style: TextStyle(fontSize: 24),
                 ),
@@ -297,15 +263,6 @@ class _CollectionPageState extends State<CollectionPage> {
     );
   }
 
-  void _updateSelectedPrefString() {
-    final selectedPrefs =
-        _MealPref.where((pref) => _selectedPref[_MealPref.indexOf(pref)])
-            .join(', ');
-    setState(() {
-      _selectedPrefString = selectedPrefs;
-    });
-  }
-
   void _updateSelectedFacilitiesString() {
     final selectedFacilities = _facilities
         .where((facility) => _selectedFacilities[_facilities.indexOf(facility)])
@@ -336,7 +293,6 @@ class _CollectionPageState extends State<CollectionPage> {
             'Family Members: $_familyMembers\n'
             'Monthly Income: $_income\n'
             'Plan Type: ${_selectedPlan == PlanType.longTerm ? 'Long Term' : 'Short Term'}\n'
-            'Food Preferences: $_selectedPrefString\n'
             'Dietary Requirements: $_selectedFacilitiesString',
             style: const TextStyle(
               fontSize: 16,
