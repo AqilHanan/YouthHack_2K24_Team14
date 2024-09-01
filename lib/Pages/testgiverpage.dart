@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youth_hack_2k24_group14/services/firestore.dart';
 
 class TestGiverPage extends StatefulWidget {
   const TestGiverPage({super.key});
@@ -10,6 +11,10 @@ class TestGiverPage extends StatefulWidget {
 enum Type { business, individual }
 
 class _TestGiverPageState extends State<TestGiverPage> {
+  //firestore
+
+  final FirestoreService firestoreService = FirestoreService();
+
   final List<String> _dietType = [
     'Halal',
     'Vegan',
@@ -30,6 +35,7 @@ class _TestGiverPageState extends State<TestGiverPage> {
   String _selectedDietTypeString = '';
   bool cooked = false;
   DateTime expdate = DateTime(2024, 8, 1);
+  String _Type = '';
 
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
@@ -230,6 +236,24 @@ class _TestGiverPageState extends State<TestGiverPage> {
 
               // Date and Time Selection
               SizedBox(height: 20),
+
+              //submit button
+              SizedBox(height: 20),
+              Center(
+                child: SizedBox(
+                  child:ElevatedButton(onPressed: (){
+                    firestoreService.addGiver(
+                        _selectedType.toString(),
+                        _nameGiver,
+                        _selectedDietTypeString,
+                        cooked,
+                        expdate);
+                    Navigator.pop(context);
+                  },
+                    child: Text("Submit"),
+                  ),
+                ),
+              )
             ],
           ),
         ),
