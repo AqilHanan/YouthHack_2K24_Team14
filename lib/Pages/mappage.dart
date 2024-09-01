@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'ordepage.dart';
+
 class LocationData {
   final String id;
   final String name;
@@ -119,7 +121,15 @@ class _MapPageState extends State<MapPage> {
                         name: location.name,
                         color: Colors.blue, // Customize marker color
                         strnum: location.strnum,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  OrderPage(value: location.strnum),
+                            ),
+                          );
+                        },
                       ),
                     );
                   }).toList(),

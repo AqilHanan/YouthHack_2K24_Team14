@@ -9,7 +9,6 @@ class TestGiverPage extends StatefulWidget {
 
 enum Type { business, individual }
 
-
 class _TestGiverPageState extends State<TestGiverPage> {
   final List<String> _dietType = [
     'Halal',
@@ -22,7 +21,6 @@ class _TestGiverPageState extends State<TestGiverPage> {
     false,
     false,
     false,
-    false,
   ];
 
   final _nameGiverController = TextEditingController();
@@ -31,24 +29,77 @@ class _TestGiverPageState extends State<TestGiverPage> {
   String _nameGiver = '';
   String _selectedDietTypeString = '';
   bool cooked = false;
-  DateTime expdate = DateTime(1,8,2024);
+  DateTime expdate = DateTime(2024, 8, 1);
+
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
+  List<TimeOfDay> _availableTimeSlots = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _generateTimeSlots();
+  }
+
+  void _generateTimeSlots() {
+    final now = TimeOfDay.now();
+    final startHour = 8;
+    final endHour = 20;
+
+    if (selectedDate == null) {
+      _availableTimeSlots = [];
+      return;
+    }
+
+    bool isToday = selectedDate!.day == DateTime.now().day &&
+        selectedDate!.month == DateTime.now().month &&
+        selectedDate!.year == DateTime.now().year;
+
+    _availableTimeSlots = [];
+
+    for (int hour = startHour; hour <= endHour; hour++) {
+      final slot = TimeOfDay(hour: hour, minute: 0);
+      if (!isToday ||
+          (slot.hour > now.hour ||
+              (slot.hour == now.hour && slot.minute > now.minute))) {
+        _availableTimeSlots.add(slot);
+      }
+    }
+
+    setState(() {});
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        selectedTime = null;
+        _generateTimeSlots();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('TestGiverPage')
+        title: const Text('TestGiverPage'),
       ),
-      //PLEASE FEEL FREE TO CHANGE THE BODY i put this as a placeholder
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Hello from TestGiverPage"),
-              SizedBox(height: 50,),
+              SizedBox(height: 50),
 
-              //type business or indiv
+              // Type Business or Individual
               RadioListTile<Type>(
                 title: const Text('Business'),
                 value: Type.business,
@@ -69,12 +120,9 @@ class _TestGiverPageState extends State<TestGiverPage> {
                   });
                 },
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
 
-
-              //name
-
-
+              // Name
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
@@ -103,12 +151,8 @@ class _TestGiverPageState extends State<TestGiverPage> {
                 ),
               ),
 
-
-              //dietType
-
-
-              SizedBox(height: 20,),
-
+              // Dietary Requirements
+              SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
@@ -134,12 +178,8 @@ class _TestGiverPageState extends State<TestGiverPage> {
                 },
               ),
 
-
-               //cooked or not
-
-
-              SizedBox(height: 20,),
-
+              // Is the food cooked?
+              SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
@@ -147,22 +187,18 @@ class _TestGiverPageState extends State<TestGiverPage> {
                   style: TextStyle(fontSize: 24),
                 ),
               ),
-
               CheckboxListTile(
-                  title: Text("Food is Cooked"),
-                  value: cooked,
-                  onChanged: (value){
-                    setState(() {
-                      cooked = value!;
-                    });
-                  }),
+                title: Text("Food is Cooked"),
+                value: cooked,
+                onChanged: (value) {
+                  setState(() {
+                    cooked = value!;
+                  });
+                },
+              ),
 
-
-              //expiry date
-
-
-              SizedBox(height: 20,),
-
+              // Expiry Date
+              SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
@@ -172,22 +208,28 @@ class _TestGiverPageState extends State<TestGiverPage> {
               ),
               Row(
                 children: [
-                  ElevatedButton(onPressed: () async {
-                    DateTime? newDate = await showDatePicker(
-                      context: context,
-                      initialDate: expdate,
-                      firstDate:DateTime(1900),
-                      lastDate:DateTime(2100),
-                    );
-                  },
-                      child: Text(
-                          "Select Date")
+                  ElevatedButton(
+                    onPressed: () async {
+                      DateTime? newDate = await showDatePicker(
+                        context: context,
+                        initialDate: expdate,
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2100),
+                      );
+                      if (newDate != null) {
+                        setState(() {
+                          expdate = newDate;
+                        });
+                      }
+                    },
+                    child: Text("Select Date"),
                   ),
-                  Text("${expdate.day}/${expdate.month}/$expdate.year")
+                  Text("${expdate.day}/${expdate.month}/${expdate.year}"),
                 ],
               ),
 
-
+              // Date and Time Selection
+              SizedBox(height: 20),
             ],
           ),
         ),
@@ -204,4 +246,3 @@ class _TestGiverPageState extends State<TestGiverPage> {
     });
   }
 }
-
