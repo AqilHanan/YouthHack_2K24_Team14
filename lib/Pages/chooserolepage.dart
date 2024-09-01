@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:youth_hack_2k24_group14/Pages/takerpage.dart';
+
+import 'delivererpage.dart';
 import 'giverpage.dart';
 import 'takerpage.dart';
-import 'delivererpage.dart';
 
 class ChooseRolePage extends StatefulWidget {
-   ChooseRolePage({super.key});
+  ChooseRolePage({super.key});
 
   @override
   State<ChooseRolePage> createState() => _ChooseRolePageState();
@@ -20,59 +20,56 @@ class _ChooseRolePageState extends State<ChooseRolePage> {
           child: Center(
             child: Column(
               children: [
-                // spacing to make things look nice
-                const SizedBox(height: 100,),
-                //put title or smth looks plain rn
-
-                //Notifications Bar with shadow (elevbutton as placeholder WILL CHANGE)
-
+                const SizedBox(
+                  height: 100,
+                ),
                 SizedBox(
                   height: 100,
                   width: 200,
-                  child: ElevatedButton(onPressed:(){},
-                      child: Text("Placeholder for notif",style: TextStyle(fontSize: 24),)
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => GiverPage()));
+                    },
+                    child: Text("Giver", style: TextStyle(fontSize: 24)),
                   ),
                 ),
-
-                //Elevated Button for Giver
-                const SizedBox(height: 25,),
+                const SizedBox(
+                  height: 25,
+                ),
                 SizedBox(
                   height: 100,
                   width: 200,
-                  child: ElevatedButton(onPressed:(){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => GiverPage())
-                    );
-                  },
-                      child: Text("Giver",style: TextStyle(fontSize: 24),)
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TakerPage(
+                            initialTier: "Tier 0", // Pass initial tier here
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text("Taker", style: TextStyle(fontSize: 24)),
                   ),
                 ),
-
-                //Elevated Button for Taker
-                const SizedBox(height: 25,),
-                SizedBox(
-                  height: 100,
-                  width: 200,
-                  child: ElevatedButton(onPressed:(){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TakerPage())
-                    );
-                  },
-                      child: Text("Taker",style: TextStyle(fontSize: 24),)
-                  ),
+                const SizedBox(
+                  height: 25,
                 ),
-
-                //Elevated Button for Delivery
-                const SizedBox(height: 25,),
                 SizedBox(
                   height: 100,
                   width: 200,
-                  child: ElevatedButton(onPressed:(){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => DelivererPage())
-                    );
-                  },
-                      child: Text("Delivery",style: TextStyle(fontSize: 24),)
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DelivererPage(),
+                        ),
+                      );
+                    },
+                    child: Text("Delivery", style: TextStyle(fontSize: 24)),
                   ),
                 ),
               ],

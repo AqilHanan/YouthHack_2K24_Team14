@@ -64,21 +64,21 @@ class _MapPageState extends State<MapPage> {
       id: '1',
       name: 'Jurong East',
       xCoordinate: 210,
-      yCoordinate: 300,
+      yCoordinate: 150,
       strnum: '1',
     ),
     LocationData(
       id: '2',
       name: 'Jl kuokh Rc',
       xCoordinate: 300,
-      yCoordinate: 280,
+      yCoordinate: 100,
       strnum: '2',
     ),
     LocationData(
       id: '3',
       name: 'Tampines CC',
       xCoordinate: 140,
-      yCoordinate: 290,
+      yCoordinate: 100,
       strnum: '3',
     ),
     // Add more locations as needed...
@@ -119,10 +119,7 @@ class _MapPageState extends State<MapPage> {
                         name: location.name,
                         color: Colors.blue, // Customize marker color
                         strnum: location.strnum,
-                        onTap: () {
-                          if (location.strnum == '1') {
-                          } else {}
-                        },
+                        onTap: () {},
                       ),
                     );
                   }).toList(),

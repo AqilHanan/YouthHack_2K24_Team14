@@ -273,6 +273,25 @@ class _CollectionPageState extends State<CollectionPage> {
   }
 
   void _showPopupDialog(BuildContext context) {
+    String summaryText = 'Name: $_name\n'
+        'Family Members: $_familyMembers\n'
+        'Monthly Income: $_income\n'
+        'Plan Type: ${_selectedPlan == PlanType.longTerm ? 'Long Term' : 'Short Term'}\n'
+        'Dietary Requirements: $_selectedFacilitiesString';
+
+    double familyMembersFloat = double.tryParse(_familyMembers) ?? 0.0;
+    double incomeFloat = double.tryParse(_income) ?? 0.0;
+    double gipp = incomeFloat / familyMembersFloat;
+    String tier = "Tier 0";
+    if (gipp <= 1000 && gipp > 500) {
+      tier = "Tier 2";
+    } else if (gipp <= 2000 && gipp > 1000) {
+      tier = "Tier 1";
+    } else if (gipp <= 500 && gipp >= 0) {
+      tier = "Tier 3";
+    } else if (gipp > 3000) {
+      tier = "Tier 0";
+    }
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -289,11 +308,7 @@ class _CollectionPageState extends State<CollectionPage> {
             ),
           ),
           content: Text(
-            'Name: $_name\n'
-            'Family Members: $_familyMembers\n'
-            'Monthly Income: $_income\n'
-            'Plan Type: ${_selectedPlan == PlanType.longTerm ? 'Long Term' : 'Short Term'}\n'
-            'Dietary Requirements: $_selectedFacilitiesString',
+            summaryText,
             style: const TextStyle(
               fontSize: 16,
             ),
@@ -313,8 +328,8 @@ class _CollectionPageState extends State<CollectionPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                Navigator.pop(context); // Exit the page
+                Navigator.of(context).pop(tier); // Return the tier value
+                Navigator.pop(context, tier); // Exit the page and return tier
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
