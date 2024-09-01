@@ -12,7 +12,6 @@ class DelivererPage extends StatefulWidget {
 
 class _DelivererPageState extends State<DelivererPage> {
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
