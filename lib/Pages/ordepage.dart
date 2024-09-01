@@ -17,6 +17,17 @@ class _OrderPageState extends State<OrderPage> {
   String str1 = '';
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
+  final List<String> _foodpacks = [
+    'Pack 1',
+    'Pack 2',
+    'Pack 3',
+  ];
+  final List<bool> _selectedfoodpacks = [
+    false,
+    false,
+    false,
+  ];
+  String _selectedfoodpacksString = '';
   List<TimeOfDay> _availableTimeSlots = [];
 
   @override
@@ -218,6 +229,48 @@ class _OrderPageState extends State<OrderPage> {
                 ),
               ],
               const SizedBox(height: 20),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: _foodpacks.length,
+                itemBuilder: (context, index) {
+                  return CheckboxListTile(
+                    title: Text(_foodpacks[index]),
+                    value: _selectedfoodpacks[index],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _selectedfoodpacks[index] = value ?? false;
+                        //_updateSelectedFacilitiesString();
+                      });
+                    },
+                  );
+                },
+              ),
+              if (_selectedfoodpacks[0]) ...[
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: Text(
+                    'This pack will contain 1 protein, 1 serving of either noodels and rice,a fruit',
+                    style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ] else if (_selectedfoodpacks[1]) ...[
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: Text(
+                    'What',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ),
+              ] else if (_selectedfoodpacks[2]) ...[
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: Text(
+                    'idk',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ),
+              ],
               ElevatedButton(
                 onPressed: _bookFacility,
                 child: const Text('Book'),
