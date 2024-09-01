@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'delivererpage.dart';
 import 'giverpage.dart';
 import 'takerpage.dart';
+import 'testgiverpage.dart';
 
 class ChooseRolePage extends StatefulWidget {
   ChooseRolePage({super.key});
@@ -29,7 +30,7 @@ class _ChooseRolePageState extends State<ChooseRolePage> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => GiverPage()));
+                          MaterialPageRoute(builder: (context) => TestGiverPage()));
                     },
                     child: Text("Giver", style: TextStyle(fontSize: 24)),
                   ),
