@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'choicepage.dart';
-import 'collectionpage.dart';
+import 'mappage.dart';
 
-class TakerPage extends StatefulWidget {
-  TakerPage({super.key});
+class ChoicePage extends StatefulWidget {
+  ChoicePage({super.key});
 
   @override
-  State<TakerPage> createState() => _TakerPageState();
+  State<ChoicePage> createState() => _ChoicePageState();
 }
 
-class _TakerPageState extends State<TakerPage> {
+class _ChoicePageState extends State<ChoicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,34 +33,18 @@ class _TakerPageState extends State<TakerPage> {
                   width: 200,
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CollectionPage()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => MapPage()));
                       },
                       child: Text(
-                        "Profile",
+                        "MAP",
                         style: TextStyle(fontSize: 24),
                       )),
                 ),
                 const SizedBox(
                   height: 25,
                 ),
-                SizedBox(
-                  height: 100,
-                  width: 200,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ChoicePage()));
-                      },
-                      child: Text(
-                        "Choice",
-                        style: TextStyle(fontSize: 24),
-                      )),
-                ),
+
                 const SizedBox(
                   height: 25,
                 ),
