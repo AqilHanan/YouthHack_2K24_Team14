@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'map2page.dart';
-import 'profilepage.dart';
+import 'mappage.dart';
 
-class DelivererPage extends StatefulWidget {
-  const DelivererPage({super.key});
+class ChoicePage extends StatefulWidget {
+  ChoicePage({super.key});
 
   @override
-  State<DelivererPage> createState() => _DelivererPageState();
+  State<ChoicePage> createState() => _ChoicePageState();
 }
 
-class _DelivererPageState extends State<DelivererPage> {
-  @override
+class _ChoicePageState extends State<ChoicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,34 +33,18 @@ class _DelivererPageState extends State<DelivererPage> {
                   width: 200,
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfilePage()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => MapPage()));
                       },
                       child: Text(
-                        "Profile",
+                        "MAP",
                         style: TextStyle(fontSize: 24),
                       )),
                 ),
                 const SizedBox(
                   height: 25,
                 ),
-                SizedBox(
-                  height: 100,
-                  width: 200,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Map2Page()));
-                      },
-                      child: Text(
-                        "Choice",
-                        style: TextStyle(fontSize: 24),
-                      )),
-                ),
+
                 const SizedBox(
                   height: 25,
                 ),
