@@ -13,6 +13,14 @@ String _name = '';
 class _ProfilePageState extends State<ProfilePage> {
   String _radioItem = "";
 
+  void _showSnackbar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 2),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,11 +92,31 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      final result = '$_name - $_radioItem';
-                      Navigator.pop(context, result);
+                      if (_name.isEmpty || _radioItem.isEmpty) {
+                        _showSnackbar(
+                            context, 'Please enter name and select a role');
+                      } else {
+                        final result = '$_name - $_radioItem';
+                        Navigator.pop(context, result);
+                      }
                     },
                     child: Text(
                       "Exit",
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 25),
+                SizedBox(
+                  height: 100,
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(
+                          context); // Pops without returning any value
+                    },
+                    child: Text(
+                      "Leave",
                       style: TextStyle(fontSize: 24),
                     ),
                   ),
