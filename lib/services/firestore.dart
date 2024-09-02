@@ -8,6 +8,8 @@ class FirestoreService {
       FirebaseFirestore.instance.collection('takers');
   final CollectionReference deliverers =
       FirebaseFirestore.instance.collection('deliverers');
+  final CollectionReference deliveries =
+    FirebaseFirestore.instance.collection('deliveries');
 
   //create: add new giver details
   Future<void> addGiver(
@@ -26,7 +28,7 @@ class FirestoreService {
       'timestamp': Timestamp.now(),
     });
   }
-
+//takers
   Future<void> addTaker(
       String nameTaker,
       String planType,
@@ -43,7 +45,7 @@ class FirestoreService {
       'timestamp': Timestamp.now(),
     });
   }
-
+  //signed up deliverers
   Future<void> addDeliverer(
       String nameDeliverer,
       String role,
@@ -57,8 +59,18 @@ class FirestoreService {
     });
   }
 
+  //deliveries who picked up what order
+Future<void> addDelivery(
+    String nameAndRole,
+    String orderSummary,
+    ){
+    return deliverers.add({
+      'nameAndRole': nameAndRole,
+      'orderSummary': orderSummary,
+    });
+}
+
   //read: get giver from database
-  //Stream<QuerySnapshot> get
 
   //update: update giver given doc id
 

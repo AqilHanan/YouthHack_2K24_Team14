@@ -58,6 +58,18 @@ class _DelivererPageState extends State<DelivererPage> {
     });
   }
 
+  void _showOrderPickedUpSnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Order picked up',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +100,20 @@ class _DelivererPageState extends State<DelivererPage> {
                       },
                       child: Text(
                         "Finished",
+                        style: TextStyle(fontSize: 24),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  SizedBox(
+                    height: 100,
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _showOrderPickedUpSnackbar();
+                      },
+                      child: Text(
+                        "Pick Up",
                         style: TextStyle(fontSize: 24),
                       ),
                     ),
