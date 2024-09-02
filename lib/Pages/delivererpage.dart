@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:youth_hack_2k24_group14/services/firestore.dart';
 import 'map2page.dart';
 import 'profilepage.dart';
 
@@ -13,6 +13,8 @@ class DelivererPage extends StatefulWidget {
 }
 
 class _DelivererPageState extends State<DelivererPage> {
+
+  final FirestoreService firestoreService = FirestoreService();
   late String _name;
   String _summaryText = '';
 
@@ -96,6 +98,7 @@ class _DelivererPageState extends State<DelivererPage> {
                     width: 200,
                     child: ElevatedButton(
                       onPressed: () {
+                        //firestoreService.deleteDelivery(docID);
                         _clearSummaryText();
                       },
                       child: Text(
@@ -110,6 +113,9 @@ class _DelivererPageState extends State<DelivererPage> {
                     width: 200,
                     child: ElevatedButton(
                       onPressed: () {
+                        firestoreService.addDelivery(
+                            _name,
+                            _summaryText);
                         _showOrderPickedUpSnackbar();
                       },
                       child: Text(
