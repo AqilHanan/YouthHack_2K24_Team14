@@ -103,8 +103,13 @@ class _TestGiverPageState extends State<TestGiverPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Hello from TestGiverPage"),
-              SizedBox(height: 50),
+              const Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Text(
+                  'Business or Individual?',
+                  style: TextStyle(fontSize: 24),
+                ),
+              ),
 
               // Type Business or Individual
               RadioListTile<Type>(
