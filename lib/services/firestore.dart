@@ -4,13 +4,10 @@ class FirestoreService {
   //get collection of givers
   final CollectionReference givers =
       FirebaseFirestore.instance.collection('givers');
-
   final CollectionReference takers =
       FirebaseFirestore.instance.collection('takers');
-
   final CollectionReference deliverers =
       FirebaseFirestore.instance.collection('deliverers');
-
   final CollectionReference deliveries =
     FirebaseFirestore.instance.collection('deliveries');
 
@@ -67,7 +64,7 @@ Future<void> addDelivery(
     String nameAndRole,
     String orderSummary,
     ){
-    return deliveries.add({
+    return deliverers.add({
       'nameAndRole': nameAndRole,
       'orderSummary': orderSummary,
     });
@@ -78,7 +75,4 @@ Future<void> addDelivery(
   //update: update giver given doc id
 
   //delete: delete giver given doc id
-  Future<void> deleteDelivery(String docID) {
-    return deliveries.doc(docID).delete();
-  }
 }
