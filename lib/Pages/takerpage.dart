@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'choicepage.dart';
 import 'collectionpage.dart';
+import 'package:youth_hack_2k24_group14/services/firestore.dart';
+
 
 class TakerPage extends StatefulWidget {
   final String initialTier;
@@ -13,6 +14,7 @@ class TakerPage extends StatefulWidget {
 }
 
 class _TakerPageState extends State<TakerPage> {
+
   late String _tier;
 
   @override

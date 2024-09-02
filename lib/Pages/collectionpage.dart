@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youth_hack_2k24_group14/services/firestore.dart';
 
 class CollectionPage extends StatefulWidget {
   const CollectionPage({super.key});
@@ -10,6 +11,9 @@ class CollectionPage extends StatefulWidget {
 enum PlanType { longTerm, shortTerm }
 
 class _CollectionPageState extends State<CollectionPage> {
+
+  final FirestoreService firestoreService = FirestoreService();
+
   final List<String> _facilities = [
     'Halal',
     'Vegan',
@@ -249,6 +253,12 @@ class _CollectionPageState extends State<CollectionPage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
+                        firestoreService.addTaker(
+                            _name,
+                            _selectedPlan.toString(),
+                            int.parse(_familyMembers),
+                            int.parse(_income),
+                            _selectedFacilitiesString);
                         _showPopupDialog(context); // Show pop-up dialog
                       },
                       child: const Text('Proceed'),
