@@ -12,6 +12,7 @@ String _name = '';
 
 class _ProfilePageState extends State<ProfilePage> {
   String _radioItem = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +21,6 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Center(
             child: Column(
               children: [
-                // spacing to make things look nice
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.0),
                   child: Text(
@@ -28,10 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
-                const SizedBox(
-                  height: 100,
-                ),
-                //put title or smth looks plain rn
+                const SizedBox(height: 100),
                 TextField(
                   controller: _nameController,
                   onChanged: (text) {
@@ -47,62 +44,54 @@ class _ProfilePageState extends State<ProfilePage> {
                       borderRadius: BorderRadius.all(Radius.circular(30.0)),
                     ),
                     hintText: 'Enter Here',
-                    hintStyle: const TextStyle(
-                      color: Colors.blueGrey,
-                    ),
+                    hintStyle: const TextStyle(color: Colors.blueGrey),
                   ),
                 ),
-
-                //Elevated Button for Delivery
-                const SizedBox(
-                  height: 25,
-                ),
-
-                const SizedBox(
-                  height: 25,
+                const SizedBox(height: 25),
+                RadioListTile<String>(
+                  title: const Text("Secondary Student"),
+                  value: "Secondary Student",
+                  groupValue: _radioItem,
+                  onChanged: (value) {
+                    setState(() {
+                      _radioItem = value!;
+                    });
+                  },
                 ),
                 RadioListTile<String>(
-                    title: const Text("Secondary Student"),
-                    value: "SStudent",
-                    groupValue: _radioItem,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioItem = value!;
-                      });
-                    }),
-                RadioListTile<String>(
-                    title: const Text("Tertiary Student"),
-                    value: "TStudent",
-                    groupValue: _radioItem,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioItem = value!;
-                      });
-                    }),
-                RadioListTile<String>(
-                    title: const Text("Volunteer from partners"),
-                    value: "VP",
-                    groupValue: _radioItem,
-                    onChanged: (value) {
-                      setState(() {
-                        _radioItem = value!;
-                      });
-                    }),
-
-                const SizedBox(
-                  height: 25,
+                  title: const Text("Tertiary Student"),
+                  value: "Tertiary Student",
+                  groupValue: _radioItem,
+                  onChanged: (value) {
+                    setState(() {
+                      _radioItem = value!;
+                    });
+                  },
                 ),
+                RadioListTile<String>(
+                  title: const Text("Volunteer from partners"),
+                  value: "Volunteer from partners",
+                  groupValue: _radioItem,
+                  onChanged: (value) {
+                    setState(() {
+                      _radioItem = value!;
+                    });
+                  },
+                ),
+                const SizedBox(height: 25),
                 SizedBox(
                   height: 100,
                   width: 200,
                   child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        "Exit",
-                        style: TextStyle(fontSize: 24),
-                      )),
+                    onPressed: () {
+                      final result = '$_name - $_radioItem';
+                      Navigator.pop(context, result);
+                    },
+                    child: Text(
+                      "Exit",
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  ),
                 ),
               ],
             ),
