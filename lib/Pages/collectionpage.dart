@@ -40,6 +40,7 @@ class _CollectionPageState extends State<CollectionPage> {
 
   String _selectedFacilitiesString = '';
 
+  String selectedPlan = '';
   String _name = '';
   String _familyMembers = '';
   String _income = '';
@@ -97,6 +98,7 @@ class _CollectionPageState extends State<CollectionPage> {
                 onChanged: (PlanType? value) {
                   setState(() {
                     _selectedPlan = value;
+                    selectedPlan = 'Long Term';
                   });
                 },
               ),
@@ -107,6 +109,7 @@ class _CollectionPageState extends State<CollectionPage> {
                 onChanged: (PlanType? value) {
                   setState(() {
                     _selectedPlan = value;
+                    selectedPlan = 'Short Term';
                   });
                 },
               ),
@@ -255,7 +258,7 @@ class _CollectionPageState extends State<CollectionPage> {
                       onPressed: () {
                         firestoreService.addTaker(
                             _name,
-                            _selectedPlan.toString(),
+                            selectedPlan,
                             int.parse(_familyMembers),
                             int.parse(_income),
                             _selectedFacilitiesString);
