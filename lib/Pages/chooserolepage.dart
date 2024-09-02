@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 import 'delivererpage.dart';
 import 'giverpage.dart';
@@ -19,7 +16,6 @@ class _ChooseRolePageState extends State<ChooseRolePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.greenAccent[200], //200 //400
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -32,11 +28,6 @@ class _ChooseRolePageState extends State<ChooseRolePage> {
                   height: 100,
                   width: 200,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.greenAccent[200],
-                      shadowColor: Colors.black,
-                      elevation: 6
-                    ),
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => TestGiverPage()));
@@ -51,11 +42,6 @@ class _ChooseRolePageState extends State<ChooseRolePage> {
                   height: 100,
                   width: 200,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.greenAccent[200],
-                        shadowColor: Colors.black,
-                        elevation: 6
-                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -76,11 +62,6 @@ class _ChooseRolePageState extends State<ChooseRolePage> {
                   height: 100,
                   width: 200,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.greenAccent[200],
-                        shadowColor: Colors.black,
-                        elevation: 6
-                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -89,13 +70,7 @@ class _ChooseRolePageState extends State<ChooseRolePage> {
                         ),
                       );
                     },
-                    child: Row(
-                      children: [
-                        Text("Delivery", style: TextStyle(fontSize: 24)),
-                        SizedBox(width: 8,),
-                        Icon(Icons.front_hand_outlined),
-                      ],
-                    ),
+                    child: Text("Delivery", style: TextStyle(fontSize: 24)),
                   ),
                 ),
               ],

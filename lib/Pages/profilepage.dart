@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:youth_hack_2k24_group14/services/firestore.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
@@ -12,8 +11,6 @@ final TextEditingController _nameController = TextEditingController();
 String _name = '';
 
 class _ProfilePageState extends State<ProfilePage> {
-
-  final FirestoreService firestoreService = FirestoreService();
   String _radioItem = "";
 
   void _showSnackbar(BuildContext context, String message) {
@@ -99,16 +96,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         _showSnackbar(
                             context, 'Please enter name and select a role');
                       } else {
-                        firestoreService.addDeliverer(
-                            _name,
-                            _radioItem,
-                        );
                         final result = '$_name - $_radioItem';
                         Navigator.pop(context, result);
                       }
                     },
                     child: Text(
-                      "Submit",
+                      "Exit",
                       style: TextStyle(fontSize: 24),
                     ),
                   ),
@@ -123,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           context); // Pops without returning any value
                     },
                     child: Text(
-                      "Exit",
+                      "Leave",
                       style: TextStyle(fontSize: 24),
                     ),
                   ),

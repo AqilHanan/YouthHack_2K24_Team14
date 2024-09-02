@@ -30,7 +30,6 @@ class _TestGiverPageState extends State<TestGiverPage> {
 
   final _nameGiverController = TextEditingController();
   Type? _selectedType = Type.business;
-  String selectedType = '';
 
   String _nameGiver = '';
   String _selectedDietTypeString = '';
@@ -114,7 +113,6 @@ class _TestGiverPageState extends State<TestGiverPage> {
                 onChanged: (Type? value) {
                   setState(() {
                     _selectedType = value;
-                    selectedType = 'Business';
                   });
                 },
               ),
@@ -125,7 +123,6 @@ class _TestGiverPageState extends State<TestGiverPage> {
                 onChanged: (Type? value) {
                   setState(() {
                     _selectedType = value;
-                    selectedType = 'Individual';
                   });
                 },
               ),
@@ -246,7 +243,7 @@ class _TestGiverPageState extends State<TestGiverPage> {
                 child: SizedBox(
                   child:ElevatedButton(onPressed: (){
                     firestoreService.addGiver(
-                        selectedType,
+                        _selectedType.toString(),
                         _nameGiver,
                         _selectedDietTypeString,
                         cooked,

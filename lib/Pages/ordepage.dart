@@ -15,8 +15,6 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> {
   String str1 = '';
-  String _deliveryOption = 'Self-Collection';
-
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
   final List<String> _foodpacks = [
@@ -231,13 +229,6 @@ class _OrderPageState extends State<OrderPage> {
                 ),
               ],
               const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'You can select your preferences:',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -280,36 +271,6 @@ class _OrderPageState extends State<OrderPage> {
                   ),
                 ),
               ],
-              const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Choose a collection option(Disabled):',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
-              RadioListTile<String>(
-                title: Text('Self-Collection'),
-                value: 'Self-Collection',
-                groupValue: _deliveryOption,
-                onChanged: (String? value) {
-                  setState(() {
-                    _deliveryOption = value!;
-                  });
-                },
-              ),
-              RadioListTile<String>(
-                title: Text('Delivery'),
-                value: 'Delivery',
-                groupValue: _deliveryOption,
-                onChanged: (String? value) {
-                  setState(() {
-                    _deliveryOption = value!;
-                  });
-                },
-              ),
-
-              // The Book button remains the same
               ElevatedButton(
                 onPressed: _bookFacility,
                 child: const Text('Book'),
