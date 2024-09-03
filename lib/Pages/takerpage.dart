@@ -3,7 +3,6 @@ import 'choicepage.dart';
 import 'collectionpage.dart';
 import 'package:youth_hack_2k24_group14/services/firestore.dart';
 
-
 class TakerPage extends StatefulWidget {
   final String initialTier;
 
@@ -14,7 +13,6 @@ class TakerPage extends StatefulWidget {
 }
 
 class _TakerPageState extends State<TakerPage> {
-
   late String _tier;
 
   @override
@@ -41,6 +39,7 @@ class _TakerPageState extends State<TakerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.greenAccent[200], // Background color matching the others
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -56,10 +55,16 @@ class _TakerPageState extends State<TakerPage> {
                   height: 100,
                   width: 200,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen[200], // Similar button color
+                      side: BorderSide(color: Colors.amber[100]!, width: 10), // Amber outer ring
+                      shadowColor: Colors.black,
+                      elevation: 6,
+                    ),
                     onPressed: () => _navigateToCollectionPage(context),
                     child: const Text(
                       "Profile",
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 24, color: Colors.black),
                     ),
                   ),
                 ),
@@ -69,15 +74,22 @@ class _TakerPageState extends State<TakerPage> {
                     height: 100,
                     width: 200,
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.lightGreen[200],
+                        side: BorderSide(color: Colors.amber[100]!, width: 10),
+                        shadowColor: Colors.black,
+                        elevation: 6,
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ChoicePage()),
+                          MaterialPageRoute(
+                              builder: (context) => ChoicePage()),
                         );
                       },
                       child: const Text(
                         "Choice",
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(fontSize: 24, color: Colors.black),
                       ),
                     ),
                   ),
@@ -86,12 +98,18 @@ class _TakerPageState extends State<TakerPage> {
                   height: 100,
                   width: 200,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen[200],
+                      side: BorderSide(color: Colors.amber[100]!, width: 10),
+                      shadowColor: Colors.black,
+                      elevation: 6,
+                    ),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: const Text(
                       "Exit",
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 24, color: Colors.black),
                     ),
                   ),
                 ),
