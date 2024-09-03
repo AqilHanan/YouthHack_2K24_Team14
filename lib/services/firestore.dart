@@ -3,22 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreService {
   //get collection of givers
   final CollectionReference givers =
-      FirebaseFirestore.instance.collection('givers');
+  FirebaseFirestore.instance.collection('givers');
   final CollectionReference takers =
-      FirebaseFirestore.instance.collection('takers');
+  FirebaseFirestore.instance.collection('takers');
   final CollectionReference deliverers =
-      FirebaseFirestore.instance.collection('deliverers');
+  FirebaseFirestore.instance.collection('deliverers');
   final CollectionReference deliveries =
-    FirebaseFirestore.instance.collection('deliveries');
+  FirebaseFirestore.instance.collection('deliveries');
 
   //create: add new giver details
-  Future<void> addGiver(
-      String type,
+  Future<void> addGiver(String type,
       String name,
       String dietType,
       bool cooked,
-      DateTime expdate
-      ) {
+      DateTime expdate) {
     return givers.add({
       'type': type,
       'name': name,
@@ -28,14 +26,13 @@ class FirestoreService {
       'timestamp': Timestamp.now(),
     });
   }
+
 //takers
-  Future<void> addTaker(
-      String nameTaker,
+  Future<void> addTaker(String nameTaker,
       String planType,
       int familyPax,
       int houseIncome,
-      String dietReq,
-      ){
+      String dietReq,) {
     return takers.add({
       'nameTaker': nameTaker,
       'planType': planType,
@@ -45,12 +42,12 @@ class FirestoreService {
       'timestamp': Timestamp.now(),
     });
   }
+
   //signed up deliverers
-  Future<void> addDeliverer(
-      String nameDeliverer,
+  Future<void> addDeliverer(String nameDeliverer,
       String role,
       //String order,
-      ){
+      ) {
     return deliverers.add({
       'nameDeliverer': nameDeliverer,
       'role': role,
@@ -60,19 +57,18 @@ class FirestoreService {
   }
 
   //deliveries who picked up what order
-Future<void> addDelivery(
-    String nameAndRole,
-    String orderSummary,
-    ){
+  Future<void> addDelivery(String nameAndRole,
+      String orderSummary,) {
     return deliverers.add({
       'nameAndRole': nameAndRole,
       'orderSummary': orderSummary,
     });
+  }
+
+//read: get giver from database
+
+//update: update giver given doc id
+
+//delete: delete giver given doc id
 }
-
-  //read: get giver from database
-
-  //update: update giver given doc id
-
-  //delete: delete giver given doc id
-}
+//end
