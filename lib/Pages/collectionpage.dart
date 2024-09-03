@@ -11,7 +11,6 @@ class CollectionPage extends StatefulWidget {
 enum PlanType { longTerm, shortTerm }
 
 class _CollectionPageState extends State<CollectionPage> {
-
   final FirestoreService firestoreService = FirestoreService();
 
   final List<String> _facilities = [
@@ -30,25 +29,25 @@ class _CollectionPageState extends State<CollectionPage> {
   ];
 
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _familyMembersController =
-      TextEditingController();
+  final TextEditingController _familyMembersController = TextEditingController();
   final TextEditingController _incomeController = TextEditingController();
   final TextEditingController _feedbackController = TextEditingController();
 
-  double _rating = 5.0; // Initial value for the slider
   PlanType? _selectedPlan = PlanType.longTerm; // Default selected plan
 
   String _selectedFacilitiesString = '';
-
   String _name = '';
   String _familyMembers = '';
   String _income = '';
+  String selectedPlan = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.greenAccent[200], // Background color to match the other pages
       appBar: AppBar(
         title: const Text('TakerPage'),
+        backgroundColor: Colors.lightGreen[200], // AppBar background color
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -56,218 +55,142 @@ class _CollectionPageState extends State<CollectionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                child: Text(
-                  'Name',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-              TextField(
-                controller: _nameController,
-                onChanged: (text) {
-                  setState(() {
-                    _name = text;
-                  });
-                },
-                style: const TextStyle(fontSize: 20),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.blue[50],
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                  hintText: 'Enter Here',
-                  hintStyle: const TextStyle(
-                    color: Colors.blueGrey,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                child: Text(
-                  'Plan Type',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-              RadioListTile<PlanType>(
-                title: const Text('Long Term'),
-                value: PlanType.longTerm,
-                groupValue: _selectedPlan,
-                onChanged: (PlanType? value) {
-                  setState(() {
-                    _selectedPlan = value;
-                  });
-                },
-              ),
-              RadioListTile<PlanType>(
-                title: const Text('Short Term'),
-                value: PlanType.shortTerm,
-                groupValue: _selectedPlan,
-                onChanged: (PlanType? value) {
-                  setState(() {
-                    _selectedPlan = value;
-                  });
-                },
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                child: Text(
-                  'How Many Family Members do you have?',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-              TextField(
-                controller: _familyMembersController,
-                onChanged: (text) {
-                  setState(() {
-                    _familyMembers = text;
-                  });
-                },
-                style: const TextStyle(fontSize: 20),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.blue[50],
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                  hintText: 'Enter Here',
-                  hintStyle: const TextStyle(
-                    color: Colors.blueGrey,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                child: Text(
-                  'What is your total monthly household income',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-              TextField(
-                controller: _incomeController,
-                onChanged: (text) {
-                  setState(() {
-                    _income = text;
-                  });
-                },
-                style: const TextStyle(fontSize: 20),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.blue[50],
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                  hintText: 'Enter Here',
-                  hintStyle: const TextStyle(
-                    color: Colors.blueGrey,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                child: Text(
-                  'Rating',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-              Slider(
-                value: _rating,
-                min: 1,
-                max: 10000,
-                divisions: 9999,
-                label: _rating.round().toString(),
-                onChanged: (double value) {
-                  setState(() {
-                    _rating = value;
-                  });
-                },
-              ),
-              const Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Text(
-                  'Dietary Requirements',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
+              _buildSectionTitle('Name'),
+              _buildTextField(_nameController, 'Enter Here', (text) {
+                setState(() {
+                  _name = text;
+                });
+              }),
+              _buildSectionTitle('Plan Type'),
+              _buildRadioListTile(PlanType.longTerm, 'Long Term'),
+              _buildRadioListTile(PlanType.shortTerm, 'Short Term'),
+              _buildSectionTitle('How Many Family Members do you have?'),
+              _buildTextField(_familyMembersController, 'Enter Here', (text) {
+                setState(() {
+                  _familyMembers = text;
+                });
+              }),
+              _buildSectionTitle('What is your total monthly household income'),
+              _buildTextField(_incomeController, 'Enter Here', (text) {
+                setState(() {
+                  _income = text;
+                });
+              }),
+              _buildSectionTitle('Dietary Requirements'),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: _facilities.length,
                 itemBuilder: (context, index) {
-                  return CheckboxListTile(
-                    title: Text(_facilities[index]),
-                    value: _selectedFacilities[index],
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _selectedFacilities[index] = value ?? false;
-                        _updateSelectedFacilitiesString();
-                      });
-                    },
-                  );
+                  return _buildCheckboxListTile(index);
                 },
               ),
               if (_selectedFacilities[4]) ...[
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
-                  child: Text(
-                    'What are your allergen Information',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                ),
-                TextField(
-                  controller: _feedbackController,
-                  onChanged: (text) {
-                    setState(() {
-                      // Do not set allergen information here if it's not used separately
-                    });
-                  },
-                  style: const TextStyle(fontSize: 20),
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.blue[50],
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                    ),
-                    hintText: 'Enter your allergen information here',
-                    hintStyle: const TextStyle(
-                      color: Colors.blueGrey,
-                    ),
-                  ),
-                  maxLines: 3,
-                ),
+                _buildSectionTitle('What are your allergen Information'),
+                _buildTextField(_feedbackController, 'Enter your allergen information here', null, maxLines: 3),
               ],
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context); // Exit button
-                      },
-                      child: const Text('Exit'),
-                    ),
-                  ),
-                  const SizedBox(
-                      width: 10), // Add some spacing between the buttons
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        firestoreService.addTaker(
-                            _name,
-                            _selectedPlan.toString(),
-                            int.parse(_familyMembers),
-                            int.parse(_income),
-                            _selectedFacilitiesString);
-                        _showPopupDialog(context); // Show pop-up dialog
-                      },
-                      child: const Text('Proceed'),
-                    ),
-                  ),
+                  _buildButton('Exit', () => Navigator.pop(context)),
+                  const SizedBox(width: 10), // Add some spacing between the buttons
+                  _buildButton('Proceed', () {
+                    if (_selectedPlan.toString() == 'PlanType.shortTerm')
+                      {
+                        selectedPlan = 'Short Term';
+                      }
+                    if (_selectedPlan.toString() == 'PlanType.longTerm')
+                      {
+                        selectedPlan = 'Long Term';
+                      }
+                    firestoreService.addTaker(
+                      _name,
+                      selectedPlan,
+                      int.parse(_familyMembers),
+                      int.parse(_income),
+                      _selectedFacilitiesString,
+                    );
+                    _showPopupDialog(context); // Show pop-up dialog
+                  }),
                 ],
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+      ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String hintText, Function(String)? onChanged, {int maxLines = 1}) {
+    return TextField(
+      controller: controller,
+      onChanged: onChanged,
+      style: const TextStyle(fontSize: 20),
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.lightGreen[200], // Similar background color for text fields
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+        ),
+        hintText: hintText,
+        hintStyle: const TextStyle(color: Colors.blueGrey),
+      ),
+      maxLines: maxLines,
+    );
+  }
+
+  Widget _buildRadioListTile(PlanType value, String title) {
+    return RadioListTile<PlanType>(
+      title: Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
+      value: value,
+      groupValue: _selectedPlan,
+      onChanged: (PlanType? value) {
+        setState(() {
+          _selectedPlan = value;
+        });
+      },
+      activeColor: Colors.amber[100], // Amber outer ring for radio buttons
+    );
+  }
+
+  Widget _buildCheckboxListTile(int index) {
+    return CheckboxListTile(
+      title: Text(_facilities[index], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
+      value: _selectedFacilities[index],
+      onChanged: (bool? value) {
+        setState(() {
+          _selectedFacilities[index] = value ?? false;
+          _updateSelectedFacilitiesString();
+        });
+      },
+      activeColor: Colors.amber[100], // Amber outer ring for checkboxes
+      checkColor: Colors.black, // Black check color
+    );
+  }
+
+  Widget _buildButton(String text, VoidCallback onPressed) {
+    return Expanded(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.lightGreen[200], // Button background color
+          side: BorderSide(color: Colors.amber[100]!, width: 5), // Amber outer ring
+          shadowColor: Colors.black,
+          elevation: 6,
+        ),
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 24, color: Colors.black), // Button text color
         ),
       ),
     );

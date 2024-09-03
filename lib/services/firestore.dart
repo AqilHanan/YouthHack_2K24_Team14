@@ -49,12 +49,12 @@ class FirestoreService {
   Future<void> addDeliverer(
       String nameDeliverer,
       String role,
-      String order,
+      //String order,
       ){
     return deliverers.add({
       'nameDeliverer': nameDeliverer,
       'role': role,
-      'order': order,
+      //'order': order,
       'timestamp': Timestamp.now(),
     });
   }

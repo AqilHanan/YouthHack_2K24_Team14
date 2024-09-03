@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'ordepage.dart';
 
 class LocationData {
@@ -89,8 +88,10 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.greenAccent[200], // Match background color with ChoicePage
       appBar: AppBar(
         title: Text('Map'),
+        backgroundColor: Colors.blue, // Matching the color of other pages' AppBars
       ),
       body: Column(
         children: [
@@ -100,15 +101,6 @@ class _MapPageState extends State<MapPage> {
               scaleEnabled: true, // Enable zooming
               minScale: 0.5, // Minimum zoom level
               maxScale: 2.0, // Maximum zoom level
-              onInteractionStart: (details) {
-                // Handle interaction start
-              },
-              onInteractionUpdate: (details) {
-                // Handle interaction update
-              },
-              onInteractionEnd: (details) {
-                // Handle interaction end
-              },
               child: Stack(
                 children: [
                   Image.asset('lib/images/sgmap.jpg'),
@@ -138,12 +130,26 @@ class _MapPageState extends State<MapPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.all(8.0),
+            margin: EdgeInsets.all(16.0),
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightGreen[200], // Button color
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  side: BorderSide(color: Colors.amber[100]!, width: 10), // Amber ring
+                ),
+                elevation: 10,
+              ),
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Exit'),
+              child: const Text(
+                'Exit',
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.black, // Text color for contrast
+                ),
+              ),
             ),
           ),
         ],
