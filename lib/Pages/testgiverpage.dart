@@ -11,8 +11,6 @@ class TestGiverPage extends StatefulWidget {
 enum Type { business, individual }
 
 class _TestGiverPageState extends State<TestGiverPage> {
-  //firestore
-
   final FirestoreService firestoreService = FirestoreService();
 
   final List<String> _dietType = [
@@ -30,6 +28,7 @@ class _TestGiverPageState extends State<TestGiverPage> {
 
   final _nameGiverController = TextEditingController();
   Type? _selectedType = Type.business;
+  String selectedType = '';
 
   String _nameGiver = '';
   String _selectedDietTypeString = '';
@@ -94,8 +93,10 @@ class _TestGiverPageState extends State<TestGiverPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.greenAccent[200], // Match the background color
       appBar: AppBar(
-        title: const Text('TestGiverPage'),
+        title: const Text('Giver Information'),
+        backgroundColor: Colors.lightGreen[200],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -106,161 +107,258 @@ class _TestGiverPageState extends State<TestGiverPage> {
                 padding: EdgeInsets.all(20.0),
                 child: Text(
                   'Business or Individual?',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 24, color: Colors.black),
                 ),
               ),
 
               // Type Business or Individual
-              RadioListTile<Type>(
-                title: const Text('Business'),
-                value: Type.business,
-                groupValue: _selectedType,
-                onChanged: (Type? value) {
-                  setState(() {
-                    _selectedType = value;
-                  });
-                },
-              ),
-              RadioListTile<Type>(
-                title: const Text('Individual'),
-                value: Type.individual,
-                groupValue: _selectedType,
-                onChanged: (Type? value) {
-                  setState(() {
-                    _selectedType = value;
-                  });
-                },
-              ),
-              SizedBox(height: 20),
+              _buildStyledRadioOption(Type.business, 'Business'),
+              _buildStyledRadioOption(Type.individual, 'Individual'),
 
               // Name
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
                   'Name',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 24, color: Colors.black),
                 ),
               ),
-              TextField(
-                controller: _nameGiverController,
-                onChanged: (text) {
-                  setState(() {
-                    _nameGiver = text;
-                  });
-                },
-                style: const TextStyle(fontSize: 20),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.blue[50],
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                  hintText: 'Enter Here',
-                  hintStyle: const TextStyle(
-                    color: Colors.blueGrey,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextField(
+                  controller: _nameGiverController,
+                  onChanged: (text) {
+                    setState(() {
+                      _nameGiver = text;
+                    });
+                  },
+                  style: const TextStyle(fontSize: 20),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.lightGreen[100],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(
+                        color: Colors.amber[100]!,
+                        width: 3,
+                      ),
+                    ),
+                    hintText: 'Enter Here',
+                    hintStyle: const TextStyle(
+                      color: Colors.blueGrey,
+                    ),
                   ),
                 ),
               ),
 
               // Dietary Requirements
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
                   'Dietary Requirements',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 24, color: Colors.black),
                 ),
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _dietType.length,
-                itemBuilder: (context, index) {
-                  return CheckboxListTile(
-                    title: Text(_dietType[index]),
-                    value: _selectedDietType[index],
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _selectedDietType[index] = value ?? false;
-                        _updateSelectedDietTypeString();
-                      });
-                    },
-                  );
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _dietType.length,
+                  itemBuilder: (context, index) {
+                    return _buildStyledCheckboxOption(index);
+                  },
+                ),
               ),
 
               // Is the food cooked?
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
                   'Is the food cooked?',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 24, color: Colors.black),
                 ),
               ),
-              CheckboxListTile(
-                title: Text("Food is Cooked"),
-                value: cooked,
-                onChanged: (value) {
-                  setState(() {
-                    cooked = value!;
-                  });
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: _buildStyledCheckboxTile(
+                  title: "Food is Cooked",
+                  value: cooked,
+                  onChanged: (value) {
+                    setState(() {
+                      cooked = value!;
+                    });
+                  },
+                ),
               ),
 
               // Expiry Date
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
                   'Expiry Date',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 24, color: Colors.black),
                 ),
               ),
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      DateTime? newDate = await showDatePicker(
-                        context: context,
-                        initialDate: expdate,
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2100),
-                      );
-                      if (newDate != null) {
-                        setState(() {
-                          expdate = newDate;
-                        });
-                      }
-                    },
-                    child: Text("Select Date"),
-                  ),
-                  Text("${expdate.day}/${expdate.month}/${expdate.year}"),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.lightGreen[200],
+                        side: BorderSide(color: Colors.amber[100]!, width: 3),
+                      ),
+                      onPressed: () async {
+                        DateTime? newDate = await showDatePicker(
+                          context: context,
+                          initialDate: expdate,
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
+                        );
+                        if (newDate != null) {
+                          setState(() {
+                            expdate = newDate;
+                          });
+                        }
+                      },
+                      child: Text("Select Date", style: TextStyle(fontSize: 20, color: Colors.black)),
+                    ),
+                    const SizedBox(width: 20),
+                    Text("${expdate.day}/${expdate.month}/${expdate.year}", style: TextStyle(fontSize: 20, color: Colors.black)),
+                  ],
+                ),
               ),
 
-              // Date and Time Selection
-              SizedBox(height: 20),
-
-              //submit button
-              SizedBox(height: 20),
+              // Submit button
+              const SizedBox(height: 20),
               Center(
                 child: SizedBox(
-                  child:ElevatedButton(onPressed: (){
-                    firestoreService.addGiver(
-                        _selectedType.toString(),
+                  width: 200,
+                  height: 60,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen[200],
+                      side: BorderSide(color: Colors.amber[100]!, width: 3),
+                      elevation: 6,
+                    ),
+                    onPressed: () {
+                      firestoreService.addGiver(
+                        selectedType,
                         _nameGiver,
                         _selectedDietTypeString,
                         cooked,
-                        expdate);
-                    Navigator.pop(context);
-                  },
-                    child: Text("Submit"),
+                        expdate,
+                      );
+                      Navigator.pop(context);
+                    },
+                    child: Text("Submit", style: TextStyle(fontSize: 24, color: Colors.black)),
                   ),
                 ),
-              )
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStyledRadioOption(Type type, String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: _selectedType == type ? Colors.lightGreen[200] : Colors.white,
+          side: BorderSide(color: Colors.amber[100]!, width: 3),
+          elevation: 6,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        onPressed: () {
+          setState(() {
+            _selectedType = type;
+            selectedType = title;
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
+            if (_selectedType == type)
+              Icon(Icons.check, color: Colors.black),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStyledCheckboxOption(int index) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: _selectedDietType[index] ? Colors.lightGreen[200] : Colors.white,
+          side: BorderSide(color: Colors.amber[100]!, width: 3),
+          elevation: 6,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        onPressed: () {
+          setState(() {
+            _selectedDietType[index] = !_selectedDietType[index];
+            _updateSelectedDietTypeString();
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              _dietType[index],
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
+            if (_selectedDietType[index])
+              Icon(Icons.check, color: Colors.black),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStyledCheckboxTile({required String title, required bool value, required ValueChanged<bool?> onChanged}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: value ? Colors.lightGreen[200] : Colors.white,
+          side: BorderSide(color: Colors.amber[100]!, width: 3),
+          elevation: 6,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        onPressed: () {
+          setState(() {
+            onChanged(!value);
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
+            if (value)
+              Icon(Icons.check, color: Colors.black),
+          ],
         ),
       ),
     );
